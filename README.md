@@ -6,3 +6,6 @@
  > cmake -B build  
  > cd build  
  > ninja  
+
+Dependency:
+	- xorg-dev
