@@ -71,7 +71,11 @@ typedef struct {
 	//uint16_t	rD;
 	stk816		sX; // X stack, for general purpose
 	stk816		sC; // C stack, for call return
+  int instructionCount;
 } ASTM16;
+
+ASTM16 ASTM_Init(uint16_t IPC, uint8_t IPP);
+int ASTM_tick(ASTM16 *vm, uint8_t pins);
 
 ASTM16 ASTM_Init(uint16_t IPC, uint8_t IPP){
 	//return (ASTM16){.HALT = false, .SR = 0, /*.RAM = (uint16_t *)calloc(0x10000, sizeof(uint16_t)),*/ /*.IR = 0,*/ .PC = IPC, /*.rA = 0, .rD = 0,*/ .r[0] = 0, .r[1] = 0, .sX = S816_Init(), .sC = S816_Init()};
@@ -80,6 +84,7 @@ ASTM16 ASTM_Init(uint16_t IPC, uint8_t IPP){
 	for(i = 0; i < 0x100; i++){
 		ret.MEM[i] = InitNullPage();//InitPage('m');
 	}
+	ret.instructionCount=0;
 	//ret.MEM[16] = InitPage('r'); // boot ROM
 	return ret;
 }
@@ -175,6 +180,10 @@ int ASTM_tick(ASTM16 *vm, uint8_t pins){
 	return rval;
 }
 
+void ASTM16AddInstruction(ASTM16 * vm, int instruction){
+  vm->MEM[0].d[vm->instructionCount*16] = instruction;
+
+}
 
 // I somehow forgot i was doing a stack machine for a moment there 
  	// decode & exec opcode: 0bRRIIIIII
