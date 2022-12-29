@@ -9,8 +9,9 @@
 #include "aascanc.h"
 #include "cgafc.h"
 #include "vm.h"
-
 //#include "vhcs.h"
+
+float deltaT;
 
 
 /*
@@ -19,12 +20,22 @@ FORGET EVERYTHING HERE, CLEAN UP MAIN LOOP AND FRAME LOOP, THINK THINGS THROUGH
 
 */
 int main(void){
-    struct VM vm = newVM();
+    deltaT = 0.0f;
     InitWindow(WINW*WINF, WINH*WINF, "Raylib vCGAfc");
     SetTargetFPS(30);
     
     printf("\n---\n---\nColor struct size: %u\n %u\n---\n---\n", sizeof(Color), '!');
     
+    //Font tfont = LoadFont("assets/IBM.ttf");
+	
+	// Set up VM operation vars
+    int cyclesRayTick = 166666;
+    bool bootromIsPresent = FileExists("boot.hex");
+	
+	
+    // Init VM
+    ASTM16 seth16 = newVM();
+	
     AACanv testcan = InitCanv(320, 200, BLACK); //ImageDrawPixel()
     AATermMono termtst = InitMonoterm(&testcan);
     
@@ -43,14 +54,14 @@ int main(void){
         ClearCanvas(&testcan, BLACK);
         
         //TxPrintC(&testcan, 10, 10, "COLOUR ME IMPRESSED!!! COLORVISION!!!!!!", BLUE, RED);
-		TxPrintC(&testcan, 10, 10, (vm.bootromIsPresent) ? "BOOT ROM PRESENT" : "NO BOOT ROM PRESENT", BLUE, RED);
+		TxPrintC(&testcan, 10, 10, (bootromIsPresent) ? "BOOT ROM PRESENT" : "NO BOOT ROM PRESENT", BLUE, RED);
         UpdateCanv(&testcan);
         
         BeginDrawing();
             DrawTexturePro(testcan.tex, testcan.src, testcan.dest, (Vector2){0.0f, 0.0f}, 0.0f, WHITE);
         EndDrawing();
         
-        vm.deltaT = GetFrameTime();
+        deltaT = GetFrameTime();
     }
     
     CloseWindow();
