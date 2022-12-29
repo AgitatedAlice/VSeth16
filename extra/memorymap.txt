@@ -1,0 +1,27 @@
+Memory map:
+
+0x00: Zero Page, unregulated shared memory space, currently interrupt vectors are set in upper range of this, use for things that need to be accessed quickly
+0x01: General Purpose User RAM
+0x02: General Purpose User RAM
+0x03: General Purpose User RAM
+0x04: General Purpose User RAM
+0x05: General Purpose User RAM
+0x06: General Purpose User RAM
+0x07: General Purpose User RAM
+0x08: General Purpose User RAM
+0x09: General Purpose User RAM
+0x0A: General Purpose User RAM
+0x0B: General Purpose User RAM
+0x0C: General Purpose User RAM
+0x0D: General Purpose User RAM
+0x0E: General Purpose User RAM
+0x0F: General Purpose User RAM
+0x10: BOOT (ROM)
+0x11: FLASH (Removable drag n drop)
+0x12: Screen
+0x13: Peripheral Device Range (audio, keyboard, mouse, etc)
+0x14: IDKLMAO
+from here to 0x1F reserved for further system/device memory mapping
+
+Screen page memory map:
+
