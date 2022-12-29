@@ -8,4 +8,4 @@
  > ninja  
 
 Dependency:
-	- xorg-dev
+	- xorg-dev (for linux)
