@@ -30,7 +30,7 @@ int main(void){
 	
 	// Set up VM operation vars
 	int cyclesRayTick = 166666;
-	
+	bool bootromIsPresent = FileExists("boot.hex");
 	
 	
 	// Init VM
@@ -62,6 +62,7 @@ int main(void){
         ClearCanvas(&testcan, BLACK);
         
         //TxPrintC(&testcan, 10, 10, "COLOUR ME IMPRESSED!!! COLORVISION!!!!!!", BLUE, RED);
+		TxPrintC(&testcan, 10, 10, (bootromIsPresent) ? "BOOT ROM PRESENT" : "NO BOOT ROM PRESENT", BLUE, RED);
         UpdateCanv(&testcan);
         
         BeginDrawing();
