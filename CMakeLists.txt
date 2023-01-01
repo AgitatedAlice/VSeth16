@@ -28,9 +28,6 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
 	"./src/*.h"
 	"./src/*.cpp"
 	"./src/*.c"
-	"./tests/*.h"
-	"./tests/*.c"
-	"./tests/*.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
@@ -52,14 +49,11 @@ if (APPLE)
     target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
 endif()
 
-# Testing
-# include(CTest)
-# add_executable(TestInstantiator TestInstantiator.cxx)
-# target_link_libraries(TestInstantiator vtkCommon)
-# add_test(NAME TestInstantiator
-#	      COMMAND TestInstantiator)
 
 enable_testing()
 
-add_executable(test1 ${SOURCES})
+add_executable(test0 test/test0.c)
+add_executable(test1 test/test1.c)
+
+add_test(NAME test0 COMMAND $<TARGET_FILE:test0>)
 add_test(NAME test1 COMMAND $<TARGET_FILE:test1>)
