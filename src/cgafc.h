@@ -54,7 +54,7 @@ APAGE InitAPage(unsigned char t){
 	printf("Initializing page type %c\n", t);
 	return (APAGE){.t = t, .d = (uint16_t *)calloc(0x10000, sizeof(uint16_t))};
 }
-// Init null page correctly
+// Init null page* correctly
 APAGE InitNullPage(){
 	return (APAGE){.t = 'u', .d = NULL};
 }
@@ -121,7 +121,6 @@ int ASTM_tick(ASTM16 *vm, uint8_t pins){
 	// isolate R bits from I bits in upper byte
 	uint8_t opc = instr.b[1]; uint8_t opr = instr.b[0]; uint8_t RS = AABT(opc, 7); uint32_t tmp;
 	//uint8_t bI = (AABT(opc, 7)*2)+(AABT(opc, 6)); opc = opc & 0x7F;
-	
 	// decode & exec opcode: 0bRIIIIIII
 	switch(opc&0x7F){ // apply mask when switching instead of changing opcode?
 		case 0x00: /* NOP			*/ break; // Halting function is MOVED TO 0xFF (case is 0x7F)
@@ -181,8 +180,8 @@ int ASTM_tick(ASTM16 *vm, uint8_t pins){
 }
 
 void ASTM16AddInstruction(ASTM16 * vm, int instruction){
-  vm->MEM[0].d[vm->instructionCount*16] = instruction;
-
+  vm->MEM[0].d[vm->instructionCount] = instruction;
+  ++vm->instructionCount;
 }
 
 // I somehow forgot i was doing a stack machine for a moment there 

@@ -50,10 +50,17 @@ if (APPLE)
 endif()
 
 
+
+###Debug
+add_compile_options("-g")
+
+### Testing
 enable_testing()
 
 add_executable(test0 test/test0.c)
 add_executable(test1 test/test1.c)
+add_executable(test2 test/test2.c)
 
 add_test(NAME test0 COMMAND $<TARGET_FILE:test0>)
 add_test(NAME test1 COMMAND $<TARGET_FILE:test1>)
+add_test(NAME test2 COMMAND $<TARGET_FILE:test2>)

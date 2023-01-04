@@ -25,7 +25,10 @@ int main(void){
     seth16.MEM[__i] = InitAPage('m');
   }
   seth16.MEM[0x10] = InitAPage('r');
+  ASTM16AddInstruction(&seth16,0x7F);//halt
+  ASTM_tick(&seth16,8);
   
-  assert(seth16.instructionCount==0);
+  assert(seth16.instructionCount==1);
+  assert(seth16.HALT);
   return 0;
 }
