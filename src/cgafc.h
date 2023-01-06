@@ -1,4 +1,3 @@
-
 #ifndef CGAFC_H
 #define CGAFC_H
 
@@ -74,8 +73,13 @@ typedef struct {
 	stk816		sC; // C stack, for call return
 } ASTM16;
 
+
 ASTM16 ASTM_Init(uint16_t IPC, uint8_t IPP);
 int ASTM_tick(ASTM16 *vm, uint8_t pins);
+void setOpCode(AWORD* instr, uint8_t value);
+void setOperand(AWORD* instr, uint8_t value);
+uint8_t opCode(AWORD* instr);
+uint8_t operand(AWORD* instr);
 
 ASTM16 ASTM_Init(uint16_t IPC, uint8_t IPP){
 	//return (ASTM16){.HALT = false, .SR = 0, /*.RAM = (uint16_t *)calloc(0x10000, sizeof(uint16_t)),*/ /*.IR = 0,*/ .PC = IPC, /*.rA = 0, .rD = 0,*/ .r[0] = 0, .r[1] = 0, .sX = S816_Init(), .sC = S816_Init()};
@@ -118,7 +122,7 @@ int ASTM_tick(ASTM16 *vm, uint8_t pins){
 	uint8_t ipage = vm->PC.p; uint16_t iaddr = vm->PC.a;
 	AWORD instr; instr.w = vm->MEM[ipage].d[iaddr]; // upper byte is opcode, lower byte is byte operand
 	// isolate R bits from I bits in upper byte
-	uint8_t opc = instr.b[1]; uint8_t opr = instr.b[0]; uint8_t RS = AABT(opc, 7); uint32_t tmp;
+	uint8_t opc = opCode(&instr); uint8_t opr = operand(&instr); uint8_t RS = AABT(opc, 7); uint32_t tmp;
 	//uint8_t bI = (AABT(opc, 7)*2)+(AABT(opc, 6)); opc = opc & 0x7F;
 	// decode & exec opcode: 0bRIIIIIII
 	switch(opc&0x7F){ // apply mask when switching instead of changing opcode?
@@ -209,4 +213,21 @@ int ASTM_tick(ASTM16 *vm, uint8_t pins){
 //	}
 
 // no more random deprecated legacy code below here, what could be salvaged has been salvaged
+
+void setOpCode(AWORD* instr, uint8_t value){
+  instr->b[1] = value;
+}
+
+void setOperand(AWORD* instr, uint8_t value){
+  instr->b[0] = value;
+}
+
+uint8_t opCode(AWORD* instr){
+  return instr->b[1];
+}
+
+uint8_t operand(AWORD* instr){
+  return instr->b[0];
+}
+
 #endif

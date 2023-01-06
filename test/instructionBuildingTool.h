@@ -8,6 +8,16 @@ typedef struct {
   ASTM16 vm;
 } ObservableVM;
 
+void initializeObservableVM(ObservableVM * ovm);
+void executeUntilHalt(ObservableVM * ovm);
+void addInstruction(ObservableVM * ovm, AWORD instruction);
+//opCodeConstructions
+AWORD halt();
+
+
+//       Functions
+
+
 void initializeObservableVM(ObservableVM * ovm){
   ovm-> instructionCount = 0;
   ovm->vm = ASTM_Init(0, 0);
@@ -23,9 +33,17 @@ void executeUntilHalt(ObservableVM * ovm){
     ASTM_tick(&ovm->vm,8);
 }
 
-void addInstruction(ObservableVM * ovm, int instruction){
-  ovm->vm.MEM[0].d[ovm->instructionCount] = instruction;
+void addInstruction(ObservableVM * ovm, AWORD instruction){
+  printf("%#010x %#010x\n",instruction.b[0],instruction.b[1]);
+  ovm->vm.MEM[0].d[ovm->instructionCount] = instruction.w;
   ++(ovm->instructionCount);
+}
+
+AWORD halt(){
+  AWORD halt;
+  setOpCode(&halt,HLT);
+  setOperand(&halt,NOP);
+  return halt;
 }
 
 #endif

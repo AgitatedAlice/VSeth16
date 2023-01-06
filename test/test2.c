@@ -7,8 +7,8 @@ int main(void){
   ObservableVM ovm;
   initializeObservableVM(&ovm);
   
-  addInstruction(&ovm,0x0D00);//whatever
-  addInstruction(&ovm,0xFF00);//halt
+  addInstruction(&ovm,halt());//whatever
+  addInstruction(&ovm,halt());//halt
   executeUntilHalt(&ovm);
 
   assert(ovm.instructionCount==2);
