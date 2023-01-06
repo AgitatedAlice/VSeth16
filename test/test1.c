@@ -11,7 +11,7 @@ int main(void){
     ovm.vm.MEM[__i] = InitAPage('m');
   }
   ovm.vm.MEM[0x10] = InitAPage('r');
-  addInstruction(&ovm,0x00FF);//halt
+  addInstruction(&ovm,0xFF00);//halt
   executeUntilHalt(&ovm);
   
   assert(ovm.instructionCount==1);

@@ -9,13 +9,13 @@ typedef struct {
 } ObservableVM;
 
 void executeUntilHalt(ObservableVM * ovm){
-  while( ! ovm->vm.HALT )
+  while( ! (ovm->vm.HALT) )
     ASTM_tick(&ovm->vm,8);
 }
 
 void addInstruction(ObservableVM * ovm, int instruction){
   ovm->vm.MEM[0].d[ovm->instructionCount] = instruction;
-  ++ovm->instructionCount;
+  ++(ovm->instructionCount);
 }
 
 #endif
