@@ -34,7 +34,7 @@ void executeUntilHalt(ObservableVM * ovm){
 }
 
 void addInstruction(ObservableVM * ovm, AWORD instruction){
-  printf("%#010x %#010x\n",instruction.b[0],instruction.b[1]);
+  //printf("%#010x %#010x\n",instruction.b[0],instruction.b[1]);
   ovm->vm.MEM[0].d[ovm->instructionCount] = instruction.w;
   ++(ovm->instructionCount);
 }
@@ -42,7 +42,7 @@ void addInstruction(ObservableVM * ovm, AWORD instruction){
 AWORD halt(){
   AWORD halt;
   setOpCode(&halt,HLT);
-  setOperand(&halt,NOP);
+  setOperand(&halt,NOP);//does not matter
   return halt;
 }
 

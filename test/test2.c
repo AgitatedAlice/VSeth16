@@ -11,7 +11,7 @@ int main(void){
   addInstruction(&ovm,halt());//halt
   executeUntilHalt(&ovm);
 
-  assert(ovm.instructionCount==2);
+  assert(ovm.vm.PC.p==3);
   assert(ovm.vm.HALT);
   return 0;
 }
