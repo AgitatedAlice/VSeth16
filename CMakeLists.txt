@@ -28,6 +28,7 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
 	"./src/*.h"
 	"./src/*.cpp"
 	"./src/*.c"
+	"/extras/*.h"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
