@@ -1,24 +1,22 @@
-// I am still a failure that cant complete a project lmao
 #include <stdio.h>
-#include "raylib.h"
-#define WINW 640
-#define WINH 480
-#define WINF 2
-#define SCRW 640*2
-#define SCRH 480*2
-#include "aascanc.h"
 #include "cgafc.h"
 
-//#include "vhcs.h"
+#define PASS 0
+#define FAIL 1
 
 float deltaT; // raylib specific, not VM related, its for keeping track of how long frames take, which is relevant for things like audio playback and smooth movement of things outside of VM, can also be used to throttle the VM if tickrate somehow exceeds target
 
+int assert(bool booleanExpression){
+  if(booleanExpression){ 
+   printf("Passed\n");
+    return PASS;
+  }
+  else{
+    printf("Failed\n");
+    return FAIL;
+  }
+}
 
-/*
-
-FORGET EVERYTHING HERE, CLEAN UP MAIN LOOP AND FRAME LOOP, THINK THINGS THROUGH
-
-*/
 int main(void){
     deltaT = 0.0f;
     InitWindow(WINW*WINF, WINH*WINF, "Raylib vCGAfc");

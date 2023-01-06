@@ -54,7 +54,7 @@ APAGE InitAPage(unsigned char t){
 	printf("Initializing page type %c\n", t);
 	return (APAGE){.t = t, .d = (uint16_t *)calloc(0x10000, sizeof(uint16_t))};
 }
-// Init null page correctly
+// Init null page* correctly
 APAGE InitNullPage(){
 	return (APAGE){.t = 'u', .d = NULL};
 }
@@ -71,7 +71,11 @@ typedef struct {
 	//uint16_t	rD;
 	stk816		sX; // X stack, for general purpose
 	stk816		sC; // C stack, for call return
+  int instructionCount;
 } ASTM16;
+
+ASTM16 ASTM_Init(uint16_t IPC, uint8_t IPP);
+int ASTM_tick(ASTM16 *vm, uint8_t pins);
 
 ASTM16 ASTM_Init(uint16_t IPC, uint8_t IPP){
 	//return (ASTM16){.HALT = false, .SR = 0, /*.RAM = (uint16_t *)calloc(0x10000, sizeof(uint16_t)),*/ /*.IR = 0,*/ .PC = IPC, /*.rA = 0, .rD = 0,*/ .r[0] = 0, .r[1] = 0, .sX = S816_Init(), .sC = S816_Init()};
@@ -80,6 +84,7 @@ ASTM16 ASTM_Init(uint16_t IPC, uint8_t IPP){
 	for(i = 0; i < 0x100; i++){
 		ret.MEM[i] = InitNullPage();//InitPage('m');
 	}
+	ret.instructionCount=0;
 	//ret.MEM[16] = InitPage('r'); // boot ROM
 	return ret;
 }
@@ -116,7 +121,6 @@ int ASTM_tick(ASTM16 *vm, uint8_t pins){
 	// isolate R bits from I bits in upper byte
 	uint8_t opc = instr.b[1]; uint8_t opr = instr.b[0]; uint8_t RS = AABT(opc, 7); uint32_t tmp;
 	//uint8_t bI = (AABT(opc, 7)*2)+(AABT(opc, 6)); opc = opc & 0x7F;
-	
 	// decode & exec opcode: 0bRIIIIIII
 	switch(opc&0x7F){ // apply mask when switching instead of changing opcode?
 		case 0x00: /* NOP			*/ break; // Halting function is MOVED TO 0xFF (case is 0x7F)
@@ -175,6 +179,10 @@ int ASTM_tick(ASTM16 *vm, uint8_t pins){
 	return rval;
 }
 
+void ASTM16AddInstruction(ASTM16 * vm, int instruction){
+  vm->MEM[0].d[vm->instructionCount] = instruction;
+  ++vm->instructionCount;
+}
 
 // I somehow forgot i was doing a stack machine for a moment there 
  	// decode & exec opcode: 0bRRIIIIII
