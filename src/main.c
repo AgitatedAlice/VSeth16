@@ -1,21 +1,14 @@
 #include <stdio.h>
 #include "cgafc.h"
-
-#define PASS 0
-#define FAIL 1
+#include "raylib.h"
+#define WINW 640
+#define WINH 480
+#define WINF 2
+#define SCRW 640*2
+#define SCRH 480*2
+#include "aascanc.h"
 
 float deltaT; // raylib specific, not VM related, its for keeping track of how long frames take, which is relevant for things like audio playback and smooth movement of things outside of VM, can also be used to throttle the VM if tickrate somehow exceeds target
-
-int assert(bool booleanExpression){
-  if(booleanExpression){ 
-   printf("Passed\n");
-    return PASS;
-  }
-  else{
-    printf("Failed\n");
-    return FAIL;
-  }
-}
 
 int main(void){
     deltaT = 0.0f;
