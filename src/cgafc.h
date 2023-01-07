@@ -46,7 +46,7 @@ typedef struct {
 #define ASTM_PIN_NMI	2
 
 typedef struct {
-	unsigned char t; // type 'r' for ROM, 'm' for RAM, 'f' for flash (non-volatile read/write)
+	unsigned char t; // type 'r' for ROM, 'm' for RAM, 'd' for device, 'f' for non-volatile
 	uint16_t *d; // pointer to 64k page
 } APAGE;
 // Initialize page and reserve memory for it
