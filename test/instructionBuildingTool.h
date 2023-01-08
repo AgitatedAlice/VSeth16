@@ -3,8 +3,8 @@
 
 #include "../extra/vseth16asm.h"
 
-#define A_REGISTER 0
-#define D_REGISTER 1
+#define A_REGISTER 0x00
+#define D_REGISTER 0x80
 
 
 typedef struct {
@@ -15,8 +15,12 @@ typedef struct {
 void initializeObservableVM(ObservableVM * ovm);
 void executeUntilHalt(ObservableVM * ovm);
 void addInstruction(ObservableVM * ovm, AWORD instruction);
+
 //opCodeConstructions
+AWORD nop();
 AWORD halt();
+AWORD lib(uint16_t isD, uint8_t value);
+AWORD liw(uint16_t isD);
 
 
 //       Functions
@@ -34,7 +38,6 @@ void initializeObservableVM(ObservableVM * ovm){
 
 void executeUntilHalt(ObservableVM * ovm){
   while( ! (ovm->vm.HALT) ){
-    printf("%d\n",ovm->vm.PC.a);
     ASTM_tick(&ovm->vm,8);
   }
 }
@@ -50,13 +53,12 @@ void addWord(ObservableVM * ovm, uint16_t word){
 }
 
 uint16_t aRegisterValue(ObservableVM * ovm){
-  return ovm->vm.r[A_REGISTER];
+  return ovm->vm.r[0];
 }
 
 uint16_t dRegisterValue(ObservableVM * ovm){
-  return ovm->vm.r[D_REGISTER];
+  return ovm->vm.r[1];
 }
-
 
 
 //0x00
@@ -68,20 +70,18 @@ AWORD nop(){
 }
 
 //0x01
-/* AWORD lib(bool isD, uint8_t value){ */
-/*   AWORD lib[2]; */
-/*   setOpCode(&lib[0],LIB); */
-/*   setOperand(&lib[0],regist); */
-/*   setOpCode(&lib[1],1); */
-/*   setOperand(&lib[1],1); */
+AWORD lib(uint16_t isD, uint8_t value){
+  AWORD lib;
+  setOpCode(&lib,LIB | isD);
+  setOperand(&lib,value);
   
-/*   return &lib; */
-/* } */
+  return lib;
+} 
 
-//0x0é
-AWORD liw(bool isD){
+//0x02
+AWORD liw(uint16_t isD){
   AWORD liw;
-  setOpCode(&liw,LIW | (isD?0x80:0x00));
+  setOpCode(&liw,LIW | isD);
   setOperand(&liw,NOP);//does not matter
   
   return liw;
