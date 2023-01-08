@@ -43,7 +43,7 @@ int main(void){
 			if(romsizewords <= 0x10000){
 				unsigned int bIter = 0; AWORD fullword;
 				for(uint16_t rdi = 0; rdi <= romsizewords; rdi++){
-					fullword.b[0] = romdata[bIter]; fullword.b[1] = romdata[bIter+1]; bIter += 2;
+					fullword.b[1] = romdata[bIter]; fullword.b[0] = romdata[bIter+1]; bIter += 2;
 					seth16.MEM[0x10].d[rdi] = fullword.w;
 				}
 				printf("Loaded boot.hex, %u bytes, %u words\nUnloading file.", romsize, romsizewords);
