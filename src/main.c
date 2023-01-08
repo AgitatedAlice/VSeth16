@@ -15,7 +15,7 @@ int main(void){
     InitWindow(WINW*WINF, WINH*WINF, "Raylib vCGAfc");
     SetTargetFPS(30);
     
-    printf("\n---\n---\nColor struct size: %u\n %u\n---\n---\n", sizeof(Color), '!');
+    //printf("\n---\n---\nColor struct size: %u\n %u\n---\n---\n", sizeof(Color), '!');
     
     //Font tfont = LoadFont("assets/IBM.ttf");
 	
@@ -27,6 +27,7 @@ int main(void){
 	
 	// Init VM
     ASTM16 seth16 = ASTM_Init(0x10, 0x0000); // Begin at page 16 (boot rom) addres 0x0000
+	int vmret = 0; uint8_t vmpins = 0;
 	// Init first 16 pages of memory as RAM
 	for(uint8_t __i = 0; __i < 0x10; __i++){
 		seth16.MEM[__i] = InitAPage('m');
@@ -55,8 +56,11 @@ int main(void){
 	// devices go beyond 0x10 single page removable rw flash at some point, larger "floppy wannabe" further up (beyond audiovisual devices) will write a doc file about the intended memory map
 	// ... tbd
 	
-    AACanv testcan = InitCanv(320, 200, BLACK); //ImageDrawPixel()
-    AATermMono termtst = InitMonoterm(&testcan);
+	// set up screen at 0x11
+	seth16.MEM[0x11] = InitAPage('d');
+	
+    AACanv vscrcan = InitCanv(320, 200, BLACK); //ImageDrawPixel()
+    AATermMono vterm = InitMonoterm(&vscrcan);
     
     Color hxcol = GetColor(0xAA00);
     
@@ -69,16 +73,41 @@ int main(void){
 		
 		
 		// Run VM ticks
+		if(bootromIsPresent){
+			for(int ticks = 0; ticks <= cyclesRayTick; ticks++){
+				vmret = ASTM_tick(&seth16, vmpins);
+			}
 		
+		/* --- VM Screen Update --- */
         //NEVER DO THIS: testcan.img = GenImageWhiteNoise(testcan.img.width, testcan.img.height, 0.5f); It causes memory leaks and crashes the program!
-        ClearCanvas(&testcan, BLACK);
+        ClearCanvas(&vscrcan, BLACK); // clear the software canvas
+		uint16_t scrMode = seth16.MEM[0x11].d[0xFFFF];
+		switch(scrMode){
+			case 0:
+				// copy in everything in text buffer range of memory on screen device memory
+				uint16_t vtI = 0;
+				
+				for(int y = 0; y < 25; y++){
+					for(int x = 0; x < 40; x++){
+						vterm.ttx[x][y] = (unsigned char)seth16.MEM[0x11].d[0xFC00 + vtI]; vtI++;
+					}
+				}
+				DrawMonoTerm(&vterm);
+				break;
+			case 1: break; // color text mode
+			case 2: break; // 4 bit RGB single buffer mode
+			case 3: break; // 256 color palette with 32 bit values over 2 word
+			default: break;
+		}
+		} else { TxPrintC(&vscrcan, 10, 10, (bootromIsPresent) ? "BOOT ROM PRESENT" : "NO BOOT ROM PRESENT", BLUE, RED); }
+			
         
         //TxPrintC(&testcan, 10, 10, "COLOUR ME IMPRESSED!!! COLORVISION!!!!!!", BLUE, RED);
-		TxPrintC(&testcan, 10, 10, (bootromIsPresent) ? "BOOT ROM PRESENT" : "NO BOOT ROM PRESENT", BLUE, RED);
-        UpdateCanv(&testcan);
+		//TxPrintC(&testcan, 10, 10, (bootromIsPresent) ? "BOOT ROM PRESENT" : "NO BOOT ROM PRESENT", BLUE, RED);
+        UpdateCanv(&vscrcan);
         
         BeginDrawing();
-            DrawTexturePro(testcan.tex, testcan.src, testcan.dest, (Vector2){0.0f, 0.0f}, 0.0f, WHITE);
+            DrawTexturePro(vscrcan.tex, vscrcan.src, vscrcan.dest, (Vector2){0.0f, 0.0f}, 0.0f, WHITE);
         EndDrawing();
         
         deltaT = GetFrameTime();
