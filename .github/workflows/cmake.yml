@@ -20,8 +20,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: install libxrandr
-      run: sudo apt-get install libxrandr-dev
+    - name: install dependencies
+      run: sudo apt-get install libxrandr-dev libxinerama
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
