@@ -1,6 +1,6 @@
 # VSeth16
 
-[![CIStatus](https://img.shields.io/github/actions/workflow/status/AgitatedAlice/cmake.yml?branch=master)](https://github.com/AgitatedAlice/VSeth16/actions/workflows/cmake.yml)
+[![CIStatus](https://img.shields.io/github/actions/workflow/status/AgitatedAlice/VSeth16/cmake.yml?branch=master)](https://github.com/AgitatedAlice/VSeth16/actions/workflows/cmake.yml)
 
  A stack oriented 16 bit fantasy console VM implemented solely with raylib and the standard C library.  
  Currently extremely WIP.  
