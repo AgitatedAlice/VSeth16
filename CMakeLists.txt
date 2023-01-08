@@ -73,3 +73,5 @@ add_test(NAME testLIWInD COMMAND $<TARGET_FILE:testLIWInD>)
 add_test(NAME testLIWSkipsPC COMMAND $<TARGET_FILE:testLIWSkipsPC>)
 add_test(NAME testLIBInD COMMAND $<TARGET_FILE:testLIBInD>)
 add_test(NAME testLIBInA COMMAND $<TARGET_FILE:testLIBInA>)
+
+file(INSTALL ./extra/boot.hex DESTINATION .)
