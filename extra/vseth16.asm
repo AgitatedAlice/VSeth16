@@ -8,17 +8,21 @@
 #ruledef
 {
 ;0x00: /* NOP			*/
-	NOP => 0x0000
+	nop => 0x0000
 ;0x01: /* LIB	r, opr	*/
-	LIB {r: register}, {value: i8} => 0x01 | r @ value
+	;LIB {r: register}, {value: i8} => (0x01 | r) @ value`8
+	lib.a {value: i8} => 0x01 @ value
+	lib.d {value: i8} => 0x81 @ value
 ;0x02: /* LIW	r, op1	*/
-	LIW {r: register}, {value: i16} => 0x02 | r @ value
+	;LIW {r: register}, {value: i16} => (0x02 || r) @ value`16
+	liw.a {value: i16} => 0x0200 @ value
+	liw.d {value: i16} => 0x8200 @ value
 ;0x03: /* LRA			*/ 
-	LRA => 0x0300
+	lra => 0x0300
 ;0x04: /* LIA	opr,op1 */ 
-	LIA {p: i8}
+	lia {p: i8}, {a:i16} => 0x04 @ p @ a
 ;0x05: /* PRA			*/ 
-	PRA => 0x0500
+	pra => 0x0500
 ;0x06: /* PIA	opr,op1 */ 
 	
 ;0x07: /* PSH	r		*/ 
