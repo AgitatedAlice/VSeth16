@@ -3,6 +3,10 @@
 
 #include "../extra/vseth16asm.h"
 
+#define A_REGISTER 0
+#define D_REGISTER 1
+
+
 typedef struct {
   int instructionCount;
   ASTM16 vm;
@@ -46,11 +50,11 @@ void addWord(ObservableVM * ovm, uint16_t word){
 }
 
 uint16_t aRegisterValue(ObservableVM * ovm){
-  return ovm->vm.r[0];
+  return ovm->vm.r[A_REGISTER];
 }
 
 uint16_t dRegisterValue(ObservableVM * ovm){
-  return ovm->vm.r[1];
+  return ovm->vm.r[D_REGISTER];
 }
 
 

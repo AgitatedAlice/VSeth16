@@ -7,7 +7,7 @@ int main(void){
   ObservableVM ovm;
   initializeObservableVM(&ovm);
   
-  addInstruction(&ovm,liw(false));
+  addInstruction(&ovm,liw(A_REGISTER));
   addWord(&ovm,0xDEAD);
   addInstruction(&ovm,halt());
   executeUntilHalt(&ovm);
