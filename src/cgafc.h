@@ -24,8 +24,8 @@ typedef union {
 } AWORD;
 
 typedef struct {
-	uint8_t p;
-	uint16_t a;
+        uint8_t p; //page
+        uint16_t a; //address (on page)
 } ADR24UI;
 
 #define ASTM_FLG_CARRY	(1 << 0)
