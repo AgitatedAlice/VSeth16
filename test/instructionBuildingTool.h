@@ -29,8 +29,10 @@ void initializeObservableVM(ObservableVM * ovm){
 }
 
 void executeUntilHalt(ObservableVM * ovm){
-  while( ! (ovm->vm.HALT) )
+  while( ! (ovm->vm.HALT) ){
+    printf("%d\n",ovm->vm.PC.a);
     ASTM_tick(&ovm->vm,8);
+  }
 }
 
 void addInstruction(ObservableVM * ovm, AWORD instruction){
@@ -39,6 +41,18 @@ void addInstruction(ObservableVM * ovm, AWORD instruction){
   ++(ovm->instructionCount);
 }
 
+
+//0x00
+AWORD nop(){
+  AWORD nope;
+  setOpCode(&nope,NOP);
+  setOperand(&nope,NOP);//does not matter
+  return nope;
+}
+
+
+
+//0xFF
 AWORD halt(){
   AWORD halt;
   setOpCode(&halt,HLT);
