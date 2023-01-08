@@ -19,8 +19,8 @@ void addInstruction(ObservableVM * ovm, AWORD instruction);
 //opCodeConstructions
 AWORD nop();
 AWORD halt();
-AWORD lib(uint16_t isD, uint8_t value);
-AWORD liw(uint16_t isD);
+AWORD lib(uint16_t targetRegister, uint8_t value);
+AWORD liw(uint16_t targetRegister);
 
 
 //       Functions
@@ -70,18 +70,18 @@ AWORD nop(){
 }
 
 //0x01
-AWORD lib(uint16_t isD, uint8_t value){
+AWORD lib(uint16_t targetRegister, uint8_t value){
   AWORD lib;
-  setOpCode(&lib,LIB | isD);
+  setOpCode(&lib,LIB | targetRegister);
   setOperand(&lib,value);
   
   return lib;
 } 
 
 //0x02
-AWORD liw(uint16_t isD){
+AWORD liw(uint16_t targetRegister){
   AWORD liw;
-  setOpCode(&liw,LIW | isD);
+  setOpCode(&liw,LIW | targetRegister);
   setOperand(&liw,NOP);//does not matter
   
   return liw;
