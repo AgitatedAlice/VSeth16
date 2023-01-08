@@ -114,6 +114,19 @@ int main(void){
     }
     
     CloseWindow();
-    
+	
+	for(uint16_t exitI = 0; exitI < 13; exitI++){
+		printf("%#06hx, %c\n", seth16.MEM[0x11].d[0xFC00 + exitI], (unsigned char)seth16.MEM[0x11].d[0xFC00 + exitI]);
+	}
+	for(int exitY = 0; exitY < 25; exitY++){
+		for(int exitX = 0; exitX < 40; exitX++){
+			printf(" %u ", vterm.ttx[exitX][exitY]);
+		}
+		printf("\n");
+	}
+	for(uint16_t exJ = 0; exJ < 100; exJ++){
+		printf("%#06hx \n", seth16.MEM[0x1].d[exJ]);
+	}
+	
     return 0;
 }
