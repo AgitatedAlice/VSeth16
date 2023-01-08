@@ -9,17 +9,12 @@
 
 #include "aautil.h"
 
-// Alice's virtual CGA fantasy console
-// Umpteenth attempt, maybe just try and get it working on single page (16b addrspace) and on signed 16 bit (shorts) data?
+// VSeth16, fantasy computer/ASTK16 VM
+// Umpteenth attempt
 
 /*
 
-Annoying block of text about the intended ISA! Since we are working with 16 bit words in 64k pages, we want to make as much use of the width of a word as possible to minimize long instructions
-By implementing a stack  and reducing number of registers and permitting only register-stack & vv. transfers in register specific functions we can potentially reduce register selection to a single bit
-i.e hack16 inspired: registers A and D, and stack X, A can point to memory and D facilitates memory data transfer, only two registers to select for push/pop, needing a single bit
-An instruction word be 0xOB 0bRIIIIIII where OB is operand byte(literal), I is the instruction bits and R is the register selector bit (0 is A 1 is D)
-However the overhead from having to constantly push and pop from the "hard" stack to either register to transfer could slow things down. To transfer from A to D you would have to PUSH A then POP B
-Whether this is acceptable or not can only be known through exsperimentation. Call this "ASTM16"
+Annoying block of text about nothing! Cut this down
 
 */
 

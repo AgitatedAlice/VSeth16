@@ -1,5 +1,6 @@
 #ifndef AAUTIL_H
 #define AAUTIL_H
+#include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
@@ -52,6 +53,18 @@ void S816_DUMP(stk816 *s){
 	for(uint16_t i = 0; i <= s->p; i++){ //0xFF; i++){
 		printf("%#04hX : %#06hX\n", i, s->mem[i]);
 	}
+}
+
+// returns true on eof or NULL file pointer
+bool getByte(uint8_t *byte, FILE *file){
+	if(file == NULL)
+		return true;
+	int fakebyte = getc(file);
+	if(fakebyte != EOF){
+		*byte = (uint8_t)fakebyte;
+		return false;
+	}
+	else {return true;}
 }
 
 /*
