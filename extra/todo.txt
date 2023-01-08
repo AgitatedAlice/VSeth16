@@ -1,0 +1,10 @@
+Todo:
+
+Jump to relative address (*PR @ A/R0)
+40x25 monochrome text display (mode 0)
+
+Test boot.hex program that prints "Hello World" to mode 0 screen, takes user keyboard input with an interrupt handler and prints it after hello world message
+
+Low priority:
+Custom single-pass assembler
+Better differentiation of VM input files through different extensions (.rom, .flash, .drv?)
