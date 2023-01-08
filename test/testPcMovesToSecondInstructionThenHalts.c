@@ -6,10 +6,11 @@
 int main(void){
   ObservableVM ovm;
   initializeObservableVM(&ovm);
-  addInstruction(&ovm,halt());
-  executeUntilHalt(&ovm);
   
-  assert(ovm.instructionCount==1);
-  assert(ovm.vm.HALT);
+  addInstruction(&ovm,nop());//whatever
+  addInstruction(&ovm,halt());//halt
+  executeUntilHalt(&ovm);
+
+  assert(ovm.vm.PC.a==2);
   return 0;
 }
