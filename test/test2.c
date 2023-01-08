@@ -7,11 +7,11 @@ int main(void){
   ObservableVM ovm;
   initializeObservableVM(&ovm);
   
-  addInstruction(&ovm,halt());//whatever
+  addInstruction(&ovm,nop());//whatever
   addInstruction(&ovm,halt());//halt
   executeUntilHalt(&ovm);
 
-  assert(ovm.vm.PC.p==3);
+  assert(ovm.vm.PC.a==2);
   assert(ovm.vm.HALT);
   return 0;
 }
