@@ -34,7 +34,7 @@ Upper word at FFFF determines mode of the screen, 0xFFFE contains screen opcode 
 0x0000 -> 0x7CFF --- Framm buffer A in mode 3
 0x7D00 -> 0xF9FF --- Frame buffer B in mode 3
 0xFA00 -> 0xFBFF --- 256 32 bit color palette for mode 3
-
+0xFC00 -> 0xFFE8 --- Text Buffer for mode 0
 
 
 TBD

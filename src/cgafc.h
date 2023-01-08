@@ -177,36 +177,6 @@ int ASTM_tick(ASTM16 *vm, uint8_t pins){
 	return rval;
 }
 
-
-// I somehow forgot i was doing a stack machine for a moment there 
- 	// decode & exec opcode: 0bRRIIIIII
-//	switch(opc){
-//		case 0x00: /* NOP 			*/ break;
-//		case 0x01: /* LIB	r, ob	*/ vm->r[AABT(bI, 1)]=opr; break;//(AABT(bI, 7)) ? vm->rD : vm->rA = opr; break;
-//		case 0x02: /* LIW	r, o1	*/ vm->r[AABT(bI, 1)]=vm->RAM[vm->PC+1]; PCinc = 1; break;//(AABT(bI, 7)) ? vm->rD : vm->rA = vm->RAM[vm->PC+1]; PCinc = 1; break;
-//		case 0x03: /* Trr			*/ vm->r[AABT(bI, 1)] = vm->r[AABT(bI, 0)]; break;
-//		case 0x04: /* PSH	r		*/ S816_PSH(vm->sX, vm->r[AABT(bI, 1)]); break;
-//		case 0x05: /* POP	r		*/ S816_POP(vm->sX, vm->r[AABT(bI, 1)]); break;
-//		case 0x06: /* STr	ob		*/ vm->RAM[opr] = vm->r[AABT(bI, 1)]; break;
-//		case 0x07: /* STr	o1		*/ vm->RAM[vm->PC+1] = vm->r[AABT(bI, 1)]; PCinc = 1; break;
-//		case 0x08: /* STr	*r		*/ vm->RAM[vm->r[AABT(bI, 0)]] = vm->r[AABT(bI, 1)]; break;
-//		case 0x09: /* PTM	*r		*/ S816_POP(vm->sX, vm->RAM[vm->r[AABT(bI, 1)]]); break; // pop to memory, might be super useful!
-//		case 0x0A: /* ADD	r, r 	*/ vm->r[AABT(bI, 1)] += vm->r[AABT(bI, 0)]; break;
-//		case 0x0B: /* SUB	r, r 	*/ vm->r[AABT(bI, 1)] -= vm->r[AABT(bI, 0)]; break;
-//		case 0x0C: /* ADB	r, ob	*/ vm->r[AABT(bI, 1)] += opr; break;
-//		case 0x0D: /* ADW	r, o1	*/ vm->r[AABT(bI, 1)] += vm->RAM[vm->PC+1]; PCinc = 1; break;
-//		case 0x0E: /* SIB	r, ob	*/ vm->r[AABT(bI, 1)] -= opr; break;
-//		case 0x0F: /* SIW	r, o1	*/ vm->r[AABT(bI, 1)] -= vm->RAM[vm->PC+1]; PCinc = 1; break;
-//		case 0x10: /* AND	r, r 	*/ vm->r[AABT(bI, 1)] &= vm->r[AABT(bI, 0)]; break;
-//		case 0x11: /* OR	r, r	*/ vm->r[AABT(bI, 1)] |= vm->r[AABT(bI, 0)]; break;
-//		case 0x12: /* XOR	r, r	*/ vm->r[AABT(bI, 1)] ^= vm->r[AABT(bI, 0)]; break;
-//		case 0x13: /* NOT	r		*/ vm->r[AABT(bI, 1)] = ~(vm->r[AABT(bI, 1)]); break;
-//		case 0x14: /* BSU	r 		*/ vm->r[AABT(bI, 1)] <<= 1;
-//		case 0x15: /* BSD	r 		*/ vm->r[AABT(bI, 1)] >>= 1;
-//		case 0x16: /* CPR	r		*/ uint8_t tmpSR = 0x00; tempSR = (((ASTM_FLG_NEG)*(vm->r[AABT(bI, 1)]==0))|((ASTM_FLG_NEG)*(AABT(vm->r[AABT(bI, 1)],7)))); break;
-//		default: break;
-//	}
-
 // no more random deprecated legacy code below here, what could be salvaged has been salvaged
 
 void setOpCode(AWORD* instr, uint8_t value){
