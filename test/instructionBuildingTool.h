@@ -36,10 +36,23 @@ void executeUntilHalt(ObservableVM * ovm){
 }
 
 void addInstruction(ObservableVM * ovm, AWORD instruction){
-  //printf("%#010x %#010x\n",instruction.b[0],instruction.b[1]);
   ovm->vm.MEM[0].d[ovm->instructionCount] = instruction.w;
   ++(ovm->instructionCount);
 }
+
+void addWord(ObservableVM * ovm, uint16_t word){
+  ovm->vm.MEM[0].d[ovm->instructionCount] = word;
+  ++(ovm->instructionCount);
+}
+
+uint16_t aRegisterValue(ObservableVM * ovm){
+  return ovm->vm.r[0];
+}
+
+uint16_t dRegisterValue(ObservableVM * ovm){
+  return ovm->vm.r[1];
+}
+
 
 
 //0x00
@@ -49,6 +62,27 @@ AWORD nop(){
   setOperand(&nope,NOP);//does not matter
   return nope;
 }
+
+//0x01
+/* AWORD lib(bool isD, uint8_t value){ */
+/*   AWORD lib[2]; */
+/*   setOpCode(&lib[0],LIB); */
+/*   setOperand(&lib[0],regist); */
+/*   setOpCode(&lib[1],1); */
+/*   setOperand(&lib[1],1); */
+  
+/*   return &lib; */
+/* } */
+
+//0x0é
+AWORD liw(bool isD){
+  AWORD liw;
+  setOpCode(&liw,LIW | (isD?0x80:0x00));
+  setOperand(&liw,NOP);//does not matter
+  
+  return liw;
+}
+
 
 //0x03
 AWORD lra(){
@@ -81,6 +115,15 @@ AWORD str(){
   setOperand(&str,NOP);//does not matter
   return str;
 }
+
+//0x0D
+AWORD inr(uint8_t r){
+  AWORD inr;
+  setOpCode(&inr,INR);
+  setOperand(&inr,r);
+  return inr;
+}
+
 
 //0x16
 AWORD sbc(){
