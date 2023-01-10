@@ -65,8 +65,8 @@ add_executable(testLIWInD test/testLIWInD.c)
 add_executable(testLIWSkipsPC test/testLIWSkipsPC.c)
 add_executable(testLIBInD test/testLIBInD.c)
 add_executable(testLIBInA test/testLIBInA.c)
-add_executable(testPSHFromAAndPopInD test/testPSHFromAAndPopInD.c)
-add_executable(testPSHFromDAndPopInA test/testPSHFromDAndPopInA.c)
+add_executable(testPSHFromAAndPOPInD test/testPSHFromAAndPOPInD.c)
+add_executable(testPSHFromDAndPOPInA test/testPSHFromDAndPOPInA.c)
 add_executable(testPSHIncreasesStackPointer test/testPSHIncreasesStackPointer.c)
 add_executable(testPOPDecreasesStackPointer test/testPOPDecreasesStackPointer.c)
 
@@ -82,8 +82,8 @@ add_test(NAME testLIBInD COMMAND $<TARGET_FILE:testLIBInD>)
 add_test(NAME testLIBInA COMMAND $<TARGET_FILE:testLIBInA>)
 
 # Stack
-add_test(NAME testPSHFromAAndPopInD COMMAND $<TARGET_FILE:testPSHFromAAndPopInD>)
-add_test(NAME testPSHFromDAndPopInA COMMAND $<TARGET_FILE:testPSHFromDAndPopInA>)
+add_test(NAME testPSHFromAAndPopInD COMMAND $<TARGET_FILE:testPSHFromAAndPOPInD>)
+add_test(NAME testPSHFromDAndPopInA COMMAND $<TARGET_FILE:testPSHFromDAndPOPInA>)
 add_test(NAME testPSHIncreasesStackPointer COMMAND $<TARGET_FILE:testPSHIncreasesStackPointer>)
 add_test(NAME testPOPDecreasesStackPointer COMMAND $<TARGET_FILE:testPOPDecreasesStackPointer>)
 
