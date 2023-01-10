@@ -6,6 +6,7 @@
 #define A_REGISTER 0x00
 #define D_REGISTER 0x80
 
+#define setRegisterBit(aByte, aRegister) (aByte | aRegister)
 
 typedef struct {
   int instructionCount;
@@ -72,7 +73,7 @@ AWORD nop(){
 //0x01
 AWORD lib(uint16_t targetRegister, uint8_t value){
   AWORD lib;
-  setOpCode(&lib,LIB | targetRegister);
+  setOpCode(&lib,setRegisterBit(LIB,targetRegister));
   setOperand(&lib,value);
   
   return lib;
@@ -81,7 +82,7 @@ AWORD lib(uint16_t targetRegister, uint8_t value){
 //0x02
 AWORD liw(uint16_t targetRegister){
   AWORD liw;
-  setOpCode(&liw,LIW | targetRegister);
+  setOpCode(&liw,setRegisterBit(LIW,targetRegister));
   setOperand(&liw,NOP);//does not matter
   
   return liw;
@@ -102,6 +103,23 @@ AWORD pra(){
   setOpCode(&pra,PRA);
   setOperand(&pra,NOP);//does not matter
   return pra;
+}
+
+//0x07 /* PSH r 		--- PuSH value in register A/D to X stack*/
+AWORD psh(uint8_t targetRegister){
+  AWORD psh;
+  setOpCode(&psh,setRegisterBit(PSH,targetRegister));
+  setOperand(&psh,NOP);//does not matter
+  return psh;
+}
+
+#define POP 0x08 /* POP r 		--- POP value in X stack to register A/D*/ 
+//0x07 /* PSH r 		--- PuSH value in register A/D to X stack*/
+AWORD pop(uint8_t targetRegister){
+  AWORD pop;
+  setOpCode(&pop,setRegisterBit(POP,targetRegister));
+  setOperand(&pop,NOP);//does not matter
+  return pop;
 }
 
 //0x09

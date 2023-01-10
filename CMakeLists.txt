@@ -65,6 +65,8 @@ add_executable(testLIWInD test/testLIWInD.c)
 add_executable(testLIWSkipsPC test/testLIWSkipsPC.c)
 add_executable(testLIBInD test/testLIBInD.c)
 add_executable(testLIBInA test/testLIBInA.c)
+add_executable(testPSHFromAAndPopInD test/testPSHFromAAndPopInD.c)
+add_executable(testPSHFromDAndPopInA test/testPSHFromDAndPopInA.c)
 
 add_test(NAME testPcMovesToSecondInstructionThenHalts COMMAND $<TARGET_FILE:testPcMovesToSecondInstructionThenHalts>)
 add_test(NAME testHaltHaltsVM COMMAND $<TARGET_FILE:testHaltHaltsVM>)
@@ -73,5 +75,8 @@ add_test(NAME testLIWInD COMMAND $<TARGET_FILE:testLIWInD>)
 add_test(NAME testLIWSkipsPC COMMAND $<TARGET_FILE:testLIWSkipsPC>)
 add_test(NAME testLIBInD COMMAND $<TARGET_FILE:testLIBInD>)
 add_test(NAME testLIBInA COMMAND $<TARGET_FILE:testLIBInA>)
+add_test(NAME testPSHFromAAndPopInD COMMAND $<TARGET_FILE:testPSHFromAAndPopInD>)
+add_test(NAME testPSHFromDAndPopInA COMMAND $<TARGET_FILE:testPSHFromDAndPopInA>)
+
 
 file(INSTALL ./extra/boot.hex DESTINATION .)
