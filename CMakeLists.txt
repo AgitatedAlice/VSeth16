@@ -58,34 +58,24 @@ add_compile_options("-g")
 ### Testing
 enable_testing()
 
-add_executable(testPcMovesToSecondInstructionThenHalts test/testPcMovesToSecondInstructionThenHalts.c)
-add_executable(testHaltHaltsVM test/testHaltHaltsVM.c)
-add_executable(testLIWInA test/testLIWInA.c)
-add_executable(testLIWInD test/testLIWInD.c)
-add_executable(testLIWSkipsPC test/testLIWSkipsPC.c)
-add_executable(testLIBInD test/testLIBInD.c)
-add_executable(testLIBInA test/testLIBInA.c)
-add_executable(testPSHFromAAndPOPInD test/testPSHFromAAndPOPInD.c)
-add_executable(testPSHFromDAndPOPInA test/testPSHFromDAndPOPInA.c)
-add_executable(testPSHIncreasesStackPointer test/testPSHIncreasesStackPointer.c)
-add_executable(testPOPDecreasesStackPointer test/testPOPDecreasesStackPointer.c)
+macro(addtest TESTNAME)
 
-# Basic
-add_test(NAME testPcMovesToSecondInstructionThenHalts COMMAND $<TARGET_FILE:testPcMovesToSecondInstructionThenHalts>)
-add_test(NAME testHaltHaltsVM COMMAND $<TARGET_FILE:testHaltHaltsVM>)
+	      add_executable(${TESTNAME} "test/${TESTNAME}.c")
+	      add_test(NAME ${TESTNAME} COMMAND $<TARGET_FILE:${TESTNAME}>)
+endmacro()
 
-# Load
-add_test(NAME testLIWInA COMMAND $<TARGET_FILE:testLIWInA>)
-add_test(NAME testLIWInD COMMAND $<TARGET_FILE:testLIWInD>)
-add_test(NAME testLIWSkipsPC COMMAND $<TARGET_FILE:testLIWSkipsPC>)
-add_test(NAME testLIBInD COMMAND $<TARGET_FILE:testLIBInD>)
-add_test(NAME testLIBInA COMMAND $<TARGET_FILE:testLIBInA>)
+addtest(testPcMovesToSecondInstructionThenHalts)
+addtest(testHaltHaltsVM)
+addtest(testLIWInA)
+addtest(testLIWInD)
+addtest(testLIWSkipsPC)
+addtest(testLIBInD)
+addtest(testLIBInA)
+addtest(testPSHFromAAndPOPInD)
+addtest(testPSHFromDAndPOPInA)
+addtest(testPSHIncreasesStackPointer)
+addtest(testPOPDecreasesStackPointer)
 
-# Stack
-add_test(NAME testPSHFromAAndPopInD COMMAND $<TARGET_FILE:testPSHFromAAndPOPInD>)
-add_test(NAME testPSHFromDAndPopInA COMMAND $<TARGET_FILE:testPSHFromDAndPOPInA>)
-add_test(NAME testPSHIncreasesStackPointer COMMAND $<TARGET_FILE:testPSHIncreasesStackPointer>)
-add_test(NAME testPOPDecreasesStackPointer COMMAND $<TARGET_FILE:testPOPDecreasesStackPointer>)
 
 
 file(INSTALL ./extra/boot.hex DESTINATION .)
