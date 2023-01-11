@@ -75,6 +75,8 @@ addtest(testPSHFromAAndPOPInD)
 addtest(testPSHFromDAndPOPInA)
 addtest(testPSHIncreasesStackPointer)
 addtest(testPOPDecreasesStackPointer)
+addtest(testPOPEmptyStack)
+addtest(testPSHFullStack)
 
 
 
