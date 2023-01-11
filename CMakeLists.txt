@@ -77,7 +77,9 @@ addtest(testPSHIncreasesStackPointer)
 addtest(testPOPDecreasesStackPointer)
 addtest(testPOPEmptyStack)
 addtest(testPSHFullStack)
-
+addtest(testPOPFullStack)
+addTest(testPOPEmptyStackPopsLastValue)
+addTest(testPSHFullStackOverridesLastValue)
 
 
 file(INSTALL ./extra/boot.hex DESTINATION .)
