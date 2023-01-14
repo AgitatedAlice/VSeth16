@@ -7,6 +7,7 @@
 #define SCRW 640*2
 #define SCRH 480*2
 #include "aascanc.h"
+#include "../memorymap.h"
 
 float deltaT; // raylib specific, not VM related, its for keeping track of how long frames take, which is relevant for things like audio playback and smooth movement of things outside of VM, can also be used to throttle the VM if tickrate somehow exceeds target
 
@@ -26,7 +27,7 @@ int main(void){
 	
 	
 	// Init VM
-    ASTM16 seth16 = ASTM_Init(0x10, 0x0000); // Begin at page 16 (boot rom) addres 0x0000
+	ASTM16 seth16 = ASTM_Init(0x10, 0x0000); // Begin at page 16 (boot rom) addres 0x0000
 	int vmret = 0; uint8_t vmpins = 0;
 	// Init first 16 pages of memory as RAM
 	for(uint8_t __i = 0; __i < 0x10; __i++){
@@ -57,7 +58,7 @@ int main(void){
 	// ... tbd
 	
 	// set up screen at 0x11
-	seth16.MEM[0x11] = InitAPage('d');
+	seth16.MEM[SCREEN_INDEX] = InitAPage('d');
 	
     AACanv vscrcan = InitCanv(320, 200, BLACK); //ImageDrawPixel()
     AATermMono vterm = InitMonoterm(&vscrcan);
@@ -75,14 +76,13 @@ int main(void){
 		// Run VM ticks
 		if(bootromIsPresent){
 			for(int ticks = 0; ticks <= cyclesRayTick; ticks++){
-			  printf("%d\n",seth16.PC.a);
 				vmret = ASTM_tick(&seth16, vmpins);
 			}
 		
 		/* --- VM Screen Update --- */
         //NEVER DO THIS: testcan.img = GenImageWhiteNoise(testcan.img.width, testcan.img.height, 0.5f); It causes memory leaks and crashes the program!
         ClearCanvas(&vscrcan, BLACK); // clear the software canvas
-		uint16_t scrMode = seth16.MEM[0x11].d[0xFFFF];
+		uint16_t scrMode = seth16.MEM[SCREEN_INDEX].d[0xFFFF];
 		switch(scrMode){
 			case 0:
 				// copy in everything in text buffer range of memory on screen device memory
@@ -117,7 +117,7 @@ int main(void){
     CloseWindow();
 	
 	for(uint16_t exitI = 0; exitI < 13; exitI++){
-		printf("%#06hx, %c\n", seth16.MEM[0x11].d[0xFC00 + exitI], (unsigned char)seth16.MEM[0x11].d[0xFC00 + exitI]);
+		printf("%#06hx, %c\n", seth16.MEM[SCREEN_INDEX].d[FRAME_BUFFER_A + exitI], (unsigned char)seth16.MEM[SCREEN_INDEX].d[FRAME_BUFFER_A + exitI]);
 	}
 	for(int exitY = 0; exitY < 25; exitY++){
 		for(int exitX = 0; exitX < 40; exitX++){
