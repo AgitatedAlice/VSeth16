@@ -42,10 +42,10 @@ int main(void){
 		// check if length is 0x10000, if valid size, load, otherwise report that it is too long and quit
 		if(romdata != NULL){
 			if(romsizewords <= 0x10000){
-				unsigned int bIter = 0; AWORD fullword;
+				uint16_t bIter = 0; AWORD fullword;
 				for(uint16_t rdi = 0; rdi <= romsizewords; rdi++){
-					fullword.b[1] = romdata[bIter]; fullword.b[0] = romdata[bIter+1]; bIter += 2;
-					seth16.MEM[0x10].d[rdi] = fullword.w;
+					fullword.b[1] = romdata[bIter]; fullword.b[0] = romdata[bIter+1]; 
+					seth16.MEM[0x10].d[rdi] = fullword.w; printf("%#06hx, %#06hx, (%#04hhx, %#04hhx) => %#06hx\n", bIter, fullword.w, romdata[bIter], romdata[bIter+1], seth16.MEM[0x10].d[rdi]); bIter += 2;
 				}
 				printf("Loaded boot.hex, %u bytes, %u words\nUnloading file.", romsize, romsizewords);
 				UnloadFileData(romdata); // unload from application memory (not VM memory!) now that we got it in the ROM page
@@ -125,7 +125,7 @@ int main(void){
 		printf("\n");
 	}
 	for(uint16_t exJ = 0; exJ < 100; exJ++){
-		printf("%#06hx \n", seth16.MEM[0x1].d[exJ]);
+		printf("%#06hx \n", seth16.MEM[0x10].d[exJ]);
 	}
 	
     return 0;
