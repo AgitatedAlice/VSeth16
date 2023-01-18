@@ -75,6 +75,7 @@ int main(void){
 		// Run VM ticks
 		if(bootromIsPresent){
 			for(int ticks = 0; ticks <= cyclesRayTick; ticks++){
+			  printf("%d\n",seth16.PC.a);
 				vmret = ASTM_tick(&seth16, vmpins);
 			}
 		
